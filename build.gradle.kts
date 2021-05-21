@@ -1,4 +1,6 @@
 import com.google.protobuf.gradle.*
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.32"
     id("org.jetbrains.kotlin.kapt") version "1.4.32"
@@ -6,6 +8,7 @@ plugins {
     id("io.micronaut.application") version "1.5.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
     id("com.google.protobuf") version "0.8.15"
+  //  kotlin("jvm") version "1.5.0-release-759"
 }
 
 version = "0.1"
@@ -34,7 +37,12 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    testImplementation("io.micronaut:micronaut-http-client")
+
+    implementation("io.micronaut:micronaut-http-client") // tava testImplementation
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa:2.4.3")
+    runtime("mysql:mysql-connector-java:5.1.6")
+    runtime("io.micronaut.sql:micronaut-jdbc-hikari")
+
 }
 
 
@@ -85,4 +93,12 @@ protobuf {
             }
         }
     }
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
