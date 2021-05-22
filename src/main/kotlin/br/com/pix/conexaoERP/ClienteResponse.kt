@@ -1,5 +1,7 @@
 package br.com.pix.conexaoERP
 
+import br.com.pix.enum.TipoConta
+
 data class ClienteResponse (
   val tipo: String,
   val titular: Cliente,
@@ -9,6 +11,13 @@ data class ClienteResponse (
 
 
         ){
+  fun toChavePix(): ChavePix {
+      return ChavePix(toConta())
+  }
+  fun toConta(): Conta{
+      return Conta(agencia,numero,instituicao.nome,instituicao.ispb,titular,TipoConta.valueOf(tipo))
+  }
+
 }
 
 /*{

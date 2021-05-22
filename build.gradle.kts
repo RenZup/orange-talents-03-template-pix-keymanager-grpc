@@ -8,6 +8,7 @@ plugins {
     id("io.micronaut.application") version "1.5.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
     id("com.google.protobuf") version "0.8.15"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.4.10"
   //  kotlin("jvm") version "1.5.0-release-759"
 }
 
@@ -39,8 +40,8 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("io.micronaut:micronaut-http-client") // tava testImplementation
-    implementation("io.micronaut.data:micronaut-data-hibernate-jpa:2.4.3")
-    runtime("mysql:mysql-connector-java:5.1.6")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    runtime("mysql:mysql-connector-java")
     runtime("io.micronaut.sql:micronaut-jdbc-hikari")
 
 }

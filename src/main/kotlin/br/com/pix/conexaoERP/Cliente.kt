@@ -1,14 +1,18 @@
 package br.com.pix.conexaoERP
 
+import javax.persistence.Embeddable
 import javax.validation.constraints.NotBlank
 
-data class Cliente (
-    @NotBlank
+@Embeddable
+ class Cliente (
+    @field:NotBlank
     val id: String,
-    @NotBlank
+    @field:NotBlank
     val nome: String,
-    @NotBlank
+    @field:NotBlank
     val cpf: String
         ){
-
+    override fun toString(): String {
+        return "Cliente(id='$id', nome='$nome', cpf='$cpf')"
+    }
 }

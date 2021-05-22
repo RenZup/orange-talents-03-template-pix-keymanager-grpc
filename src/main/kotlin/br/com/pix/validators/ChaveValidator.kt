@@ -8,11 +8,11 @@ import javax.validation.Constraint
 import kotlin.reflect.KClass
 
 @Singleton
-class ChaveValidator: ConstraintValidator<ChavePix, CadastrarChaveRequestDto> {
+class ChaveValidator: ConstraintValidator<ChavePixValida, CadastrarChaveRequestDto> {
 
     override fun isValid(
         value: CadastrarChaveRequestDto?,
-        annotationMetadata: AnnotationValue<ChavePix>,
+        annotationMetadata: AnnotationValue<ChavePixValida>,
         context: io.micronaut.validation.validator.constraints.ConstraintValidatorContext
     ): Boolean {
        return value?.tipoChave?.valid(value.valorChave)?: false
@@ -25,7 +25,7 @@ class ChaveValidator: ConstraintValidator<ChavePix, CadastrarChaveRequestDto> {
 @Target(AnnotationTarget.CLASS,AnnotationTarget.TYPE)
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [ChaveValidator::class])
-annotation class ChavePix(
+annotation class ChavePixValida(
     val message: String = "chave PIX inválida para o tipo informado",
     val groups: Array<KClass<Any>> = [],
     val payload: Array<KClass<Any>> = [],
