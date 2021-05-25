@@ -4,6 +4,8 @@ import br.com.pix.conexaoERP.ChavePix
 import br.com.pix.conexaoERP.ContaResponse
 import br.com.pix.conexaoERP.ErpClient
 import br.com.pix.dto.CadastrarChaveRequestDto
+import br.com.pix.exception.ChaveDuplicadaException
+import br.com.pix.exception.ContaNaoEncontradaException
 import br.com.pix.repository.ChavePixRepository
 import io.micronaut.http.HttpStatus
 import io.micronaut.validation.Validated
@@ -21,12 +23,10 @@ class CadastrarChaveService(
 
     fun cadastrar(@Valid dto: CadastrarChaveRequestDto) {
         //verificar se a chave ja existe no banco
-        if(repository.existsByValorChave(dto.valorChave)){
-            throw IllegalArgumentException("Ja existe uma chave com esse valor")
-        }
+        if(repository.existsByValorChave(dto.valorChave)) throw ChaveDuplicadaException()
 
         val response = cliente.consulta(dto.idCliente, dto.tipoConta.name)
-        val conta = response.body()?.toConta() ?: throw IllegalStateException("Cliente nao encontrado no Itau")
+        val conta = response.body()?.toConta() ?: throw ContaNaoEncontradaException()
         val chavePix = ChavePix(tipoChave = dto.tipoChave, valorChave = dto.valorChave, conta = conta)
 
         println(response)
