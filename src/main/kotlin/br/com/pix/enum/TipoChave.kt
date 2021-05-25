@@ -1,6 +1,5 @@
 package br.com.pix.enum
 
-import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
 import io.micronaut.validation.validator.constraints.EmailValidator
 
 enum class TipoChave {
@@ -43,7 +42,8 @@ enum class TipoChave {
     },
     CHAVE_ALEATORIA {
         override fun valid(chave: String?): Boolean {
-            return chave.isNullOrBlank()
+          //return chave.isNullOrBlank()
+            return true
         }
     };
 

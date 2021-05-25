@@ -6,4 +6,6 @@ import io.micronaut.data.repository.CrudRepository
 
 @Repository
 interface ChavePixRepository: CrudRepository<ChavePix,Long>{
+    fun existsByContaTitularId(idCliente: String):Boolean
+    fun existsByValorChave(valorChave: String):Boolean
 }

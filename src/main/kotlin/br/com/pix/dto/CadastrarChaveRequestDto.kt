@@ -14,7 +14,6 @@ data class CadastrarChaveRequestDto (
     @field:NotBlank
     val idCliente : String,
     val valorChave: String,
-    @field:Valid
     val tipoChave : TipoChave,
     val tipoConta: TipoConta
 ){

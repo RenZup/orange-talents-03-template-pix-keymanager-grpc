@@ -8,8 +8,6 @@ import br.com.pix.enum.TipoChave
 import br.com.pix.enum.TipoConta
 import br.com.pix.services.CadastrarChaveService
 import io.grpc.stub.StreamObserver
-import io.micronaut.validation.Validated
-import java.lang.IllegalArgumentException
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,22 +19,24 @@ class ChaveGRPCServer(@Inject private val cadastraService: CadastrarChaveService
         val dto = request.toDto()
         cadastraService.cadastrar(dto)
 
-        if(dto.valorChave.isNullOrBlank()){
-            responseObserver.onNext(CadastrarChaveResponse.newBuilder().setIdPixGerado(UUID.randomUUID().toString()).build())
-        }else{
-            responseObserver.onNext(CadastrarChaveResponse.newBuilder().setIdPixGerado(dto.valorChave).build())
-        }
-
+        responseObserver.onNext(CadastrarChaveResponse.newBuilder().setIdPixGerado(dto.valorChave).build())
         responseObserver.onCompleted()
 
 
 
     }
     fun CadastrarChaveRequest.toDto(): CadastrarChaveRequestDto{
+
+        val localChave: String = if(tipoChave.name == TipoChave.CHAVE_ALEATORIA.toString()){
+            UUID.randomUUID().toString()
+        }else{
+            valorChave
+        }
+
         return CadastrarChaveRequestDto(idCliente = idCliente,
         tipoChave = TipoChave.valueOf(tipoChave.name),
         tipoConta = TipoConta.valueOf(tipoConta.name),
-        valorChave = valorChave)
+        valorChave = localChave)
     }
 
 
