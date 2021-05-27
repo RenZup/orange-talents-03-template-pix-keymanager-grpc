@@ -17,7 +17,7 @@ data class ContaResponse (
 
   fun toConta(): Conta {
 
-      return Conta(agencia,numero,instituicao.nome,instituicao.ispb,titular,TipoConta.valueOf(tipo))
+      return Conta(agencia,numero,instituicao,titular,TipoConta.valueOf(tipo))
   }
 
 }
