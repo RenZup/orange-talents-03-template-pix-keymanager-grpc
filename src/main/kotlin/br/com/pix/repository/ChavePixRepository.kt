@@ -8,4 +8,6 @@ import io.micronaut.data.repository.CrudRepository
 interface ChavePixRepository: CrudRepository<ChavePix,Long>{
     fun existsByContaTitularId(idCliente: String):Boolean
     fun existsByValorChave(valorChave: String):Boolean
+    fun findByValorChaveAndContaTitularId(valorChave: String,idCliente: String): ChavePix?
+    fun deleteByValorChave(valorChave: String): Unit
 }

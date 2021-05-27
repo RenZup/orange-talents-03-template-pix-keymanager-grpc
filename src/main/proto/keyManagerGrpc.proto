@@ -7,9 +7,13 @@ option objc_class_prefix = "HLW";
 
 package br.com.pix;
 
-service PixCrudService {
+service PixCreateService {
   rpc create (CadastrarChaveRequest) returns (CadastrarChaveResponse) {}
 }
+service PixRemoveService {
+    rpc remove (RemoveChaveRequest) returns (RemoveChaveResponse) {}
+}
+
 
 enum TipoChave {
     CHAVE_DESCONHECIDA = 0;
@@ -34,4 +38,13 @@ message CadastrarChaveRequest {
 
 message CadastrarChaveResponse {
   string idPixGerado = 1;
+}
+
+message RemoveChaveRequest {
+  string idCliente = 1;
+  string valorChave = 2;
+}
+message RemoveChaveResponse {
+  string idCliente = 1;
+  string valorChave = 2;
 }

@@ -2,7 +2,7 @@ package br.com.pix.endpoint
 
 import br.com.pix.CadastrarChaveRequest
 import br.com.pix.CadastrarChaveResponse
-import br.com.pix.PixCrudServiceGrpc
+import br.com.pix.PixCreateServiceGrpc
 import br.com.pix.compartilhado.HandleExceptions
 import br.com.pix.dto.CadastrarChaveRequestDto
 import br.com.pix.enum.TipoChave
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 
 @Singleton
 @HandleExceptions
-class ChaveGRPCServer(@Inject private val cadastraService: CadastrarChaveService): PixCrudServiceGrpc.PixCrudServiceImplBase() {
+class CadastraChaveEndpoint(@Inject private val cadastraService: CadastrarChaveService): PixCreateServiceGrpc.PixCreateServiceImplBase() {
     override fun create(request: CadastrarChaveRequest, responseObserver: StreamObserver<CadastrarChaveResponse>) {
 
         val dto = request.toDto()

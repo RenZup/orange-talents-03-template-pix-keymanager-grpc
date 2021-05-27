@@ -1,28 +1,24 @@
 package br.com.pix
-import br.com.pix.conexaoERP.ContaResponse
 import br.com.pix.conexaoERP.ErpClient
-import br.com.pix.endpoint.ChaveGRPCServer
+import br.com.pix.endpoint.CadastraChaveEndpoint
 import br.com.pix.model.ChavePix
+import br.com.pix.model.Cliente
 import br.com.pix.model.Conta
+import br.com.pix.model.Instituicao
 import br.com.pix.repository.ChavePixRepository
-import io.micronaut.data.annotation.Repository
-import io.micronaut.http.HttpResponse
+import io.micronaut.context.annotation.Factory
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.annotation.MockBean
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 import javax.inject.Inject
-import org.mockito.Mockito.`when`
 
-@MicronautTest
+@MicronautTest(transactional = false)
 internal class KeyManagerGrpcTest(
     val repository: ChavePixRepository,
-    val chaveGRPCServer: ChaveGRPCServer
+    val cadastraChaveEndpoint: CadastraChaveEndpoint
 ) {
 
     @Inject
@@ -46,24 +42,29 @@ internal class KeyManagerGrpcTest(
 
     @Test
     fun `deve registrar nova chave pix`() {
-        /*val chave = ChavePix(tipoChave = br.com.pix.enum.TipoChave.EMAIL,
-        valorChave = "renzo.piedade@zup.com.br",conta = Conta(
-                agencia = "001",
-                numero = "213216489",
-
-        ))*/
-
-        `when`(
-            clientItau.consulta(clienteId = UUID.randomUUID().toString(),
-            tipo = TipoConta.CONTA_CORRENTE.toString()
+        val idCliente = "5260263c-a3c1-4727-ae32-3bdb2538841b"
+        val chave = ChavePix(
+            tipoChave = br.com.pix.enum.TipoChave.EMAIL,
+            valorChave = "renzo.piedade@zup.com.br",conta = Conta(
+                    agencia = "0001",
+                    numero = "291900",
+                    instituicao = Instituicao(nome = "ITAÚ UNIBANCO S.A.",ispb = "60701190"),
+                    titular = Cliente(idCliente,"Yuri Matheus","86135457004"),
+                    tipoConta = br.com.pix.enum.TipoConta.CONTA_CORRENTE
             )
-        ).thenReturn(HttpResponse.ok())
+        )
+
 
     }
 
     @MockBean(ErpClient::class)
     fun erpItauClient(): ErpClient?{
         return Mockito.mock(ErpClient::class.java)
+    }
+
+    @Factory
+    class Clients{
+
     }
 
    /* internal fun buildChave(

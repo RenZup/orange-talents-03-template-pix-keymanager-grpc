@@ -1,10 +1,10 @@
 package br.com.pix.compartilhado.handlers
 
-import br.com.pix.exception.ContaNaoEncontradaException
+import br.com.pix.exception.ObjetoNaoEncontradoException
 import io.grpc.Status
 
-class ContaNaoEncontradaExceptionHandler  : ExceptionHandler<ContaNaoEncontradaException> {
-    override fun handle(e: ContaNaoEncontradaException): ExceptionHandler.StatusWithDetails {
+class ContaNaoEncontradaExceptionHandler  : ExceptionHandler<ObjetoNaoEncontradoException> {
+    override fun handle(e: ObjetoNaoEncontradoException): ExceptionHandler.StatusWithDetails {
         return ExceptionHandler.StatusWithDetails(
             Status.NOT_FOUND
                 .withDescription(e.message)
@@ -13,6 +13,6 @@ class ContaNaoEncontradaExceptionHandler  : ExceptionHandler<ContaNaoEncontradaE
     }
 
     override fun supports(e: Exception): Boolean {
-        return e is ContaNaoEncontradaException
+        return e is ObjetoNaoEncontradoException
     }
 }
