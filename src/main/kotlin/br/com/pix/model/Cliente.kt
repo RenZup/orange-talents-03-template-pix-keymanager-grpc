@@ -1,4 +1,4 @@
-package br.com.pix.conexaoERP
+package br.com.pix.model
 
 import javax.persistence.Embeddable
 import javax.validation.constraints.NotBlank

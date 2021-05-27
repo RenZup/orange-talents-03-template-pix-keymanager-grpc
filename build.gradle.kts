@@ -40,9 +40,11 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("io.micronaut:micronaut-http-client") // tava testImplementation
+    testImplementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     runtime("mysql:mysql-connector-java")
     runtime("io.micronaut.sql:micronaut-jdbc-hikari")
+    testImplementation("org.mockito:mockito-all:1.10.19")
 
 }
 

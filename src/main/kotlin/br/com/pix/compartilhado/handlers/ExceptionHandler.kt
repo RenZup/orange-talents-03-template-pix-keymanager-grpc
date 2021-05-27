@@ -1,7 +1,7 @@
 package br.com.pix.compartilhado.handlers
 
-import io.grpc.Status
 import io.grpc.Metadata
+import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import io.grpc.protobuf.StatusProto
 

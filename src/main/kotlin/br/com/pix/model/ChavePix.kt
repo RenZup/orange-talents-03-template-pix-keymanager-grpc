@@ -1,4 +1,4 @@
-package br.com.pix.conexaoERP
+package br.com.pix.model
 
 import br.com.pix.enum.TipoChave
 import com.sun.istack.NotNull
