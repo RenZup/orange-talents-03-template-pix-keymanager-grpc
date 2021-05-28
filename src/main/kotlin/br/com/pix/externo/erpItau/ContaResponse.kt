@@ -1,4 +1,4 @@
-package br.com.pix.conexaoERP
+package br.com.pix.externo.erpItau
 
 import br.com.pix.enum.TipoConta
 import br.com.pix.model.Cliente

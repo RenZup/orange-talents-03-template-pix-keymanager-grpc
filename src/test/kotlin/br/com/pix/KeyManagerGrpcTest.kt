@@ -1,5 +1,5 @@
 package br.com.pix
-import br.com.pix.conexaoERP.ErpClient
+import br.com.pix.externo.erpItau.ErpClient
 import br.com.pix.endpoint.CadastraChaveEndpoint
 import br.com.pix.model.ChavePix
 import br.com.pix.model.Cliente

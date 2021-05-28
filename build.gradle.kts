@@ -45,6 +45,7 @@ dependencies {
     runtime("mysql:mysql-connector-java")
     runtime("io.micronaut.sql:micronaut-jdbc-hikari")
     testImplementation("org.mockito:mockito-all:1.10.19")
+    implementation("io.micronaut.xml:micronaut-jackson-xml")
 
 }
 

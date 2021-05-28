@@ -1,4 +1,4 @@
-package br.com.pix.conexaoERP
+package br.com.pix.externo.erpItau
 
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get
