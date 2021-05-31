@@ -37,7 +37,7 @@ class CadastraChaveEndpoint(@Inject private val cadastraService: CadastrarChaveS
     }
     fun CadastrarChaveRequest.toDto(): CadastrarChaveRequestDto{
 
-        val localChave: String = if(tipoChave.name == TipoChave.CHAVE_ALEATORIA.toString()){
+        val localChave: String = if(tipoChave.name == TipoChave.RANDOM.toString()){
             UUID.randomUUID().toString()
         }else{
             valorChave

@@ -20,7 +20,7 @@ enum class TipoChave {
 
         }
     },
-    CELULAR {
+    PHONE {
         override fun valid(chave: String?): Boolean {
 
             if(chave.isNullOrBlank()){
@@ -40,12 +40,21 @@ enum class TipoChave {
             }
         }
     },
-    CHAVE_ALEATORIA {
+    RANDOM {
         override fun valid(chave: String?): Boolean {
           //return chave.isNullOrBlank()
             return true
         }
-    };
+    },
+    CNPJ{
+        override fun valid(chave: String?): Boolean {
+            if(chave.isNullOrBlank()) return false
+
+            return chave.matches("/^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}\$/\n".toRegex())
+        }
+
+    }
+    ;
 
 
     abstract fun  valid(chave: String ?): Boolean
