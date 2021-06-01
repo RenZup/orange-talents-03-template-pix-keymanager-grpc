@@ -2,6 +2,7 @@ package br.com.pix.services
 
 import br.com.pix.externo.erpItau.ErpClient
 import br.com.pix.dto.CadastrarChaveRequestDto
+import br.com.pix.enum.TipoChave
 import br.com.pix.exception.ChaveDuplicadaException
 import br.com.pix.exception.ObjetoNaoEncontradoException
 import br.com.pix.externo.bcb.CadastrarChaveBcbRequest
@@ -24,7 +25,7 @@ class CadastrarChaveService(
     @Inject private val bcbClient: BcbClient
 ) {
     @Transactional
-    fun cadastrar(@Valid dto: CadastrarChaveRequestDto) {
+    fun cadastrar(@Valid dto: CadastrarChaveRequestDto): ChavePix {
         //verificar se a chave ja existe no banco
         if(repository.existsByValorChave(dto.valorChave)) throw ChaveDuplicadaException()
 
@@ -33,16 +34,23 @@ class CadastrarChaveService(
         val conta = response.body()?.toConta() ?: throw ObjetoNaoEncontradoException("Conta nao encontrada")
         val chavePix = ChavePix(tipoChave = dto.tipoChave, valorChave = dto.valorChave, conta = conta)
 
-        println(response)
-        println(chavePix)
-
-        //Persistir a chave criada no banco
-        repository.save(chavePix)
-
         //Cadastrar no BCB
         val bcbRequest = CadastrarChaveBcbRequest.builder(chavePix, TipoContaRequestBcb.CACC, OwnerType.NATURAL_PERSON)
-        println(bcbRequest.toString())
-        bcbClient.cadastrar(bcbRequest)
+        val responseCadastro = bcbClient.cadastrar(bcbRequest)
+
+        //Verificar se a chave é randomica e persistir no banco
+        if(chavePix.tipoChave == TipoChave.RANDOM){
+            val novaChavePixRandomica: ChavePix = ChavePix(chavePix.tipoChave,responseCadastro.body()!!.key,chavePix.conta)
+            repository.save(novaChavePixRandomica)
+            return novaChavePixRandomica
+        }else{
+            repository.save(chavePix)
+            return chavePix
+        }
+
+
+
+
 
     }
 

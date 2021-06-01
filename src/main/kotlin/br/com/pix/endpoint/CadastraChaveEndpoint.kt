@@ -23,30 +23,21 @@ class CadastraChaveEndpoint(@Inject private val cadastraService: CadastrarChaveS
 
         val dto = request.toDto()
         try{
-            cadastraService.cadastrar(dto)
+            val chaveCriada = cadastraService.cadastrar(dto)
+            responseObserver.onNext(CadastrarChaveResponse.newBuilder().setIdPixGerado(chaveCriada.valorChave).build())
+            responseObserver.onCompleted()
+
         }catch (e:HttpClientResponseException){
             responseObserver.onError(StatusRuntimeException(Status.NOT_FOUND.withDescription("Id invalido")))
         }
 
-
-        responseObserver.onNext(CadastrarChaveResponse.newBuilder().setIdPixGerado(dto.valorChave).build())
-        responseObserver.onCompleted()
-
-
-
     }
     fun CadastrarChaveRequest.toDto(): CadastrarChaveRequestDto{
-
-        val localChave: String = if(tipoChave.name == TipoChave.RANDOM.toString()){
-            UUID.randomUUID().toString()
-        }else{
-            valorChave
-        }
 
         return CadastrarChaveRequestDto(idCliente = idCliente,
         tipoChave = TipoChave.valueOf(tipoChave.name),
         tipoConta = TipoConta.valueOf(tipoConta.name),
-        valorChave = localChave)
+        valorChave = valorChave)
     }
 
 

@@ -2,10 +2,11 @@ package br.com.pix.externo.bcb
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime
+import java.util.*
 
 data class DeletarChaveBcbResponse(
-    private val key: String,
-    private val participant: String,
-    private val deletedAt: LocalDateTime,
+     val key: String,
+     val participant: String,
+     val deletedAt: LocalDateTime,
 )
 

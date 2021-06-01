@@ -42,8 +42,8 @@ enum class TipoChave {
     },
     RANDOM {
         override fun valid(chave: String?): Boolean {
-          //return chave.isNullOrBlank()
-            return true
+          return chave.isNullOrBlank()
+
         }
     },
     CNPJ{
